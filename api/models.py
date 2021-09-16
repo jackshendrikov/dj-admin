@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Link(models.Model):
-    link = models.URLField(max_length=200, db_index=True, null=True)
+    link = models.URLField(max_length=1024, db_index=True, null=True)
 
     def __str__(self):
         return self.link
