@@ -1,1 +1,1 @@
-web: gunicorn dj_test.wsgi --log-file -
+web: gunicorn dj_admin.wsgi --log-file -
