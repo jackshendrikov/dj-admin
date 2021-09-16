@@ -27,6 +27,7 @@ export_as_csv.short_description = "Export Selected as CSV"
 
 
 class ProductResource(resources.ModelResource):
+    # we need this five fields to display the actual values that are hidden behind ForeignKeys
     source = fields.Field(column_name='source', attribute='source',
                           widget=ForeignKeyWidget(Source, 'source'))
 
@@ -44,8 +45,8 @@ class ProductResource(resources.ModelResource):
 
     class Meta:
         model = Product
-        fields = ('source', 'country', 'brand', 'category', 'link')
-        import_id_fields = ['source', 'country', 'brand', 'category', 'link']
+        fields = ('source', 'country', 'brand', 'category', 'link')  # fields to export
+        import_id_fields = ['source', 'country', 'brand', 'category', 'link']  # fields to import
 
 
 @admin.register(Product)
