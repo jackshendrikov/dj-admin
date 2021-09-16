@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="JackShen">
+
+    <meta property="og:title" content="Test API" />
+    <meta property="og:type" content="website" />
+
+    <title>Test API</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    {% block extrahead %}
+    {% endblock extrahead %}
+</head>
+
+<body>
+<div class="container py-3">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="text-center mb-3">Test API</h2>
+            <div class="form-group" style="text-align: center;">
+                <button class="btn btn-primary" onclick="window.open('{% url 'api:get_request' %}', '_self')">GET</button>
+                <button class="btn btn-primary" onclick="window.open('{% url 'api:post_request' %}', '_self')">POST</button>
+            </div>
+            <hr class="mb-4">
+{% block content %}
+{% endblock %}
+        </div>
+    </div>
+</div>
+
+<!-- jQuery and Bootstrap core JS, plus Popper -->
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+
+<script>
+$( document ).ready(function() {
+    $([document.documentElement, document.body]).animate({
+        scrollTop: $("#responseArea").offset().top
+    }, 2000);
+});
+</script>
+</body>
+</html>

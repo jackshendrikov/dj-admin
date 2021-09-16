@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+{% block extrahead %}
+<style>
+#div_id_link label, #div_id_country label,
+#div_id_source label, #div_id_brand label,
+#div_id_category label {
+    display: none;
+}
+
+#div_id_link, #div_id_country,
+#div_id_source, #div_id_brand, #div_id_category {
+    margin-bottom: inherit;
+}
+
+.response {
+    font-size: 12px;
+    height: auto;
+    font-family: "Consolas", sans-serif;
+}
+
+#responseArea {
+    background-color: #fff;
+}
+</style>
+{% endblock extrahead %}
+
+{% block content %}
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="card card-outline-secondary">
+                        <div class="card-header">
+                            <h3 class="mb-0" style="text-align: center;">Response</h3>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="row mb-1">
+                                <div class="col-lg-12">
+                                    <div class="form-control response">
+                                        <span>
+                                            <b>{{ status }}</b><br>
+                                        </span>
+
+                                        <textarea id="responseArea" class="form-control response" style="color: #D14; border: none;" rows="{% if form %}10{% else %}15{% endif %}" readonly>{{ json_response }}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% if form %}
+            <br><br>
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="card card-outline-secondary">
+                        <div class="card-header">
+                            <h3 class="mb-0" style="text-align: center;">HTML Form</h3>
+                        </div>
+
+                        <div class="card-body">
+                            <form action="{% url 'api:post_request' %}" method="post">
+                                {% csrf_token %}
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label form-control-label">Link</label>
+                                    <div class="col-lg-9">
+                                        {{ form.link|as_crispy_field }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label form-control-label">Country</label>
+                                    <div class="col-lg-9">
+                                        {{ form.country|as_crispy_field }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label form-control-label">Source</label>
+                                    <div class="col-lg-9">
+                                        {{ form.source|as_crispy_field }}
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label form-control-label">Brand</label>
+                                    <div class="col-lg-9">
+                                        {{ form.brand|as_crispy_field }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label form-control-label">Category</label>
+                                    <div class="col-lg-9">
+                                        {{ form.category|as_crispy_field }}
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label form-control-label"></label>
+                                    <div class="col-lg-9">
+                                        <input class="btn btn-primary" type="submit" value="POST">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif%}
+{% endblock %}
