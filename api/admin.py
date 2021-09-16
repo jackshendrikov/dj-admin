@@ -3,9 +3,11 @@ import csv
 from django.contrib import admin
 from django.http import HttpResponse
 
+from import_export import resources, fields
+from import_export.widgets import ForeignKeyWidget
+from import_export.admin import ImportExportModelAdmin
 
-
-from api.models import Source, Brand, Link, Product
+from api.models import Source, Brand, Link, Product, Category, Country
 
 
 def export_as_csv(modeladmin, request, queryset):
@@ -24,8 +26,30 @@ def export_as_csv(modeladmin, request, queryset):
 export_as_csv.short_description = "Export Selected as CSV"
 
 
+class ProductResource(resources.ModelResource):
+    source = fields.Field(column_name='source', attribute='source',
+                          widget=ForeignKeyWidget(Source, 'source'))
+
+    country = fields.Field(column_name='country', attribute='country',
+                           widget=ForeignKeyWidget(Country, 'country'))
+
+    brand = fields.Field(column_name='brand', attribute='brand',
+                         widget=ForeignKeyWidget(Brand, 'brand'))
+
+    category = fields.Field(column_name='category', attribute='category',
+                            widget=ForeignKeyWidget(Category, 'category'))
+
+    link = fields.Field(column_name='link', attribute='link',
+                        widget=ForeignKeyWidget(Link, 'link'))
+
+    class Meta:
+        model = Product
+        fields = ('source', 'country', 'brand', 'category', 'link')
+        import_id_fields = ['source', 'country', 'brand', 'category', 'link']
+
+
 @admin.register(Product)
-class ProductAdmin(admin.ModelAdmin):
+class ProductAdmin(ImportExportModelAdmin):
     list_display = ('source', 'country', 'brand', 'category', 'link')
     list_display_links = ('country', 'category', 'link')
     list_editable = ('source', 'brand')
@@ -43,7 +67,10 @@ class ProductAdmin(admin.ModelAdmin):
         }),
     )
 
+    resource_class = ProductResource
+
 
 admin.site.register(Brand)
 admin.site.register(Source)
 admin.site.register(Link)
+
